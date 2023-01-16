@@ -29,6 +29,8 @@ from src.modeling.video_captioning_e2e_vid_swin_bert import VideoTransformer
 from src.modeling.load_swin import get_swin_model, reload_pretrained_swin
 from src.modeling.load_bert import get_bert_model
 
+#torch.cuda.empty_cache()
+
 def _online_video_decode(args, video_path):
     decoder_num_frames = getattr(args, 'max_num_frames', 2)
     frames, _ = extract_frames_from_video_path(
@@ -183,7 +185,7 @@ def get_custom_args(base_config):
 def main(args):
     args = update_existing_config_for_inference(args)
     # global training_saver
-    args.device = torch.device(args.device)
+    args.device = torch.device('cpu')
     # Setup CUDA, GPU & distributed training
     dist_init(args)
     check_arguments(args)

@@ -49,7 +49,7 @@ class VideoTransformer(torch.nn.Module):
             vid_att_len = self.max_img_seq_length
             learn_att = self.learn_vid_att.weight.reshape(vid_att_len,vid_att_len)
             learn_att = self.sigmoid(learn_att)
-            diag_mask = torch.diag(torch.ones(vid_att_len)).cuda()
+            diag_mask = torch.diag(torch.ones(vid_att_len))
             video_attention = (1. - diag_mask)*learn_att
             learn_att = diag_mask + video_attention
             if self.sparse_mask_soft2hard:
